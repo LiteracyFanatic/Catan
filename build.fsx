@@ -16,6 +16,8 @@ let appReferences = !! "/**/*.fsproj"
 let dotnetcliVersion = "2.0.2"
 let mutable dotnetExePath = "dotnet"
 
+let serverExecutablePath = __SOURCE_DIRECTORY__ </> "src\\bin\\Debug\\net461\\Catan.exe"
+
 // --------------------------------------------------------------------------------------
 // Helpers
 // --------------------------------------------------------------------------------------
@@ -67,6 +69,14 @@ Target "Build" (fun _ ->
     )
 )
 
+Target "Run" (fun _ ->
+    let result =
+        ExecProcess (fun info ->
+            info.FileName <- serverExecutablePath
+            ) TimeSpan.MaxValue
+    if result <> 0 then failwithf "Catan.exe failed"
+)
+
 // --------------------------------------------------------------------------------------
 // Build order
 // --------------------------------------------------------------------------------------
@@ -75,5 +85,6 @@ Target "Build" (fun _ ->
   ==> "InstallDotNetCLI"
   ==> "Restore"
   ==> "Build"
+  ==> "Run"
 
 RunTargetOrDefault "Build"
