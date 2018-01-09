@@ -1,3 +1,4 @@
+module Server
 open Suave
 open Suave.Successful
 open Suave.Web
@@ -10,7 +11,7 @@ open Catan
 
 let newGame () =
     let gameState =
-        Domain.init (System.Random())
+        GameState.init (System.Random())
 
     let json =
         JsonConvert.SerializeObject(gameState, Formatting.Indented)
