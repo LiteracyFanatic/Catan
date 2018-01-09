@@ -1,4 +1,5 @@
 namespace Catan
+
 type ResourceCard =
     | Brick
     | Lumber

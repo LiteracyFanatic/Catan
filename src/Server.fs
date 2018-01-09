@@ -1,4 +1,5 @@
 module Server
+
 open Suave
 open Suave.Successful
 open Suave.Web
@@ -7,7 +8,6 @@ open Suave.Operators
 open Suave.Filters
 open Suave.Html
 open Newtonsoft.Json
-open Catan
 
 let newGame () =
     let gameState =

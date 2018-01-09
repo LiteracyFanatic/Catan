@@ -1,4 +1,7 @@
-module Catan.Player
+module Player
+
+open Catan
+
 let createPlayer id =
     {
         PlayerId = PlayerId id
@@ -49,7 +52,7 @@ let toCollectedResources (roll : int) (terrainMap : Map<TerrainIndex, TerrainTil
             match v with
             | Fertile terrain when terrain.Number = roll ->
                 let resource =
-                    ResourceCard.terrainToResource terrain.TerrainType
+                    Terrain.toResourceCard terrain.TerrainType
 
                 let terrainIndex =
                     Terrain.toVertices k       

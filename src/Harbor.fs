@@ -1,4 +1,7 @@
-module Catan.Harbor
+module Harbor
+
+open Catan
+
 let toVertices (HarborIndex i) =
     match i with
     | 0 -> [ { X = 4; Y = 0 }; { X = 5; Y = 0 } ]

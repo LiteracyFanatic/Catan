@@ -1,4 +1,7 @@
-module Catan.DevelopmentCard
+module DevelopmentCard
+
+open Catan
+
 let fromDevelopmentAction = function
     | VictoryPointAction -> VictoryPoint
     | KnightAction _ -> Knight

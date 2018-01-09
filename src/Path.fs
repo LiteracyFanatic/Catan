@@ -1,4 +1,7 @@
-module Catan.Path
+module Path
+
+open Catan
+
 let intersect (Path (a, b)) (Path (c, d)) =
     a = c || a = d || b = c || b = d
 

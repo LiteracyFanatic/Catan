@@ -6,7 +6,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DomainTypes.fs" />
-    <Compile Include="ResourceCard.fs" />   
     <Compile Include="Vertex.fs" />
     <Compile Include="Path.fs" />
     <Compile Include="Terrain.fs" />
@@ -16,7 +15,7 @@
     <Compile Include="GameState.fs" />
     <Compile Include="Server.fs" />
     <Compile Include="Tests.fs" />
-  
+    <Compile Include="Main.fs" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

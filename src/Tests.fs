@@ -1,4 +1,7 @@
-module Catan.Tests
+module Tests
+
+open Catan
+
 let makePlayer paths =
     {
         PlayerId = PlayerId 0

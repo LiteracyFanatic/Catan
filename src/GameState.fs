@@ -1,4 +1,7 @@
-module Catan.GameState
+module GameState
+
+open Catan
+
 let mapActivePlayer (f : Player -> Player) (gameState : GameState) =
     {
         gameState with

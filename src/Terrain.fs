@@ -1,4 +1,14 @@
-module Catan.Terrain
+module Terrain
+
+open Catan
+
+let toResourceCard = function
+    | Hills -> Brick
+    | Forest -> Lumber
+    | Pasture -> Wool
+    | Fields -> Grain
+    | Mountains -> Ore
+
 let private (|From|_|) (lower : int) (upper : int) (x : int) =
     if x >= lower && x <= upper then Some x else None
 
