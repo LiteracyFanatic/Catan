@@ -9,19 +9,17 @@ let fromVertex (a : Vertex) (opponentVertices : Vertex list) =
     if List.contains a opponentVertices then
         []
     else
-        [
-            { X = a.X + 1; Y = a.Y }
-            { X = a.X - 1; Y = a.Y }
-            { X = a.X; Y = a.Y + 1 }
-            { X = a.X; Y = a.Y - 1 }
-        ]
+        [ { X = a.X + 1; Y = a.Y }
+          { X = a.X - 1; Y = a.Y }
+          { X = a.X; Y = a.Y + 1 }
+          { X = a.X; Y = a.Y - 1 } ]
         |> List.map (fun b -> Path (a, b))
 
 let adjacent (Path (a, b) as path) (opponentVertices : Vertex list) =
     fromVertex a opponentVertices @ fromVertex b opponentVertices
     |> List.filter ((<>) path)
 
-let longestChainFromPath (path : Path) (roadLocations : Path list) (opponentVertices : Vertex list) =
+let longestChain (path : Path) (roadLocations : Path list) (opponentVertices : Vertex list) =
     let rec loop (chain : Path list) n =
         match roadLocations with
         | [] -> failwith "Player shouldn't be able to have no roads."
@@ -32,13 +30,10 @@ let longestChainFromPath (path : Path) (roadLocations : Path list) (opponentVert
             let intersectingPaths =
                 roadLocations
                 |> List.filter (fun p ->
-                    let isAdjacent = 
-                        List.contains p adjacent
-                    let isInChain = 
-                        List.contains p chain
+                    let isAdjacent = List.contains p adjacent
+                    let isInChain = List.contains p chain
                     let isFork =
-                        if chain.Length > 1 then
-                            intersect chain.[1] p
+                        if chain.Length > 1 then intersect chain.[1] p
                         else
                             false
                     isAdjacent && not isInChain && not isFork)

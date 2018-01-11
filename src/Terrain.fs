@@ -47,4 +47,5 @@ let adjacentTiles (TerrainIndex i) =
         | 17 -> [13; 14; 16; 18]
         | 18 -> [14; 15; 17]
         | _ -> failwith "Terrain index out of bounds"
+        
     List.map TerrainIndex ns    

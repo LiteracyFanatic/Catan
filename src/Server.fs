@@ -10,11 +10,9 @@ open Suave.Html
 open Newtonsoft.Json
 
 let newGame () =
-    let gameState =
-        GameState.init (System.Random())
+    let gameState = GameState.init (System.Random())
 
-    let json =
-        JsonConvert.SerializeObject(gameState, Formatting.Indented)
+    let json = JsonConvert.SerializeObject(gameState, Formatting.Indented)
 
     p ["style", "white-space: pre-wrap;"] [Text json]
     |> htmlToString

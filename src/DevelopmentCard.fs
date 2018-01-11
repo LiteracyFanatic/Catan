@@ -8,3 +8,4 @@ let fromDevelopmentAction = function
     | YearOfPlentyAction _ -> YearOfPlenty
     | RoadBuildingAction _ -> RoadBuilding
     | MonopolyAction _ -> Monopoly
+

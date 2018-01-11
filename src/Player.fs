@@ -1,43 +1,42 @@
 module Player
 
 open Catan
+open Aether
 
-let createPlayer id =
-    {
-        PlayerId = PlayerId id
-        VictoryPoints = 0
-        ResourceCards = Map.empty
-        DevelopmentCards = Map.empty
-        Communities = []
-        Roads = []
-        ArmySize = 0
-    }
+let create id =
+    let resourceCards =
+        [Brick; Lumber; Wool; Grain; Ore]
+        |> List.map (fun r -> r, 0)
+        |> Map
 
-let addResource (resource : ResourceCard) (n : int) (player : Player) =
-    {
-        player with
-            ResourceCards =
-                player.ResourceCards
-                |> Map.mapValueAtKey resource ((+) n)
-    } 
+    let developmentCards =
+        [VictoryPoint; Knight; YearOfPlenty; RoadBuilding; Monopoly]
+        |> List.map (fun r -> r, 0)
+        |> Map  
 
-let removeResource (resource : ResourceCard) (n : int) (player : Player) =
-    {
-        player with
-            ResourceCards =
-                player.ResourceCards
-                |> Map.mapValueAtKey resource ((+) -n)
-    } 
+    { PlayerId = PlayerId id
+      VictoryPoints = 0
+      ResourceCards = resourceCards
+      DevelopmentCards = developmentCards
+      Communities = []
+      Roads = []
+      ArmySize = 0 }
 
-let addResources (x : Map<ResourceCard, int>) =
-    x
+let addResource (resource : ResourceCard) (n : int) =
+    Optic.map Player.ResourceCards_ (Map.mapValueAtKey resource ((+) n))
+        
+let removeResource (resource : ResourceCard) (n : int) =
+    Optic.map Player.ResourceCards_ (Map.mapValueAtKey resource ((+) n))
+
+let addResources (resources : Map<ResourceCard, int>) =
+    resources
     |> Map.toList        
     |> List.unzip
     ||> List.map2 addResource
     |> List.reduce (>>)
 
-let removeResources (x : Map<ResourceCard, int>) =
-    x
+let removeResources (resources : Map<ResourceCard, int>) =
+    resources
     |> Map.toList
     |> List.unzip
     ||> List.map2 removeResource
@@ -76,20 +75,13 @@ let toCollectedResources (roll : int) (terrainMap : Map<TerrainIndex, TerrainTil
 
     resources
 
-let numberToRob (player : Player) =
-    player.ResourceCards.Count / 2
+let numberToRob (player : Player) = player.ResourceCards.Count / 2
 
 let longestRoad (opponentVertices : Vertex list) (player : Player) =
-    let paths =
-        player.Roads
-        |> List.map (fun (Road path) -> path)
-
+    let paths = List.map (fun (Road path) -> path) player.Roads
+        
     paths
-    |> List.map (fun path -> 
-        Path.longestChainFromPath 
-            path 
-            paths
-            opponentVertices)
+    |> List.map (fun path -> Path.longestChain path paths opponentVertices)
     |> List.max
 
 let calculateVictoryPoints (achievements : Map<AchievementCard, PlayerId option>) (player : Player) =
@@ -103,7 +95,7 @@ let calculateVictoryPoints (achievements : Map<AchievementCard, PlayerId option>
     let achievementPoints =
         achievements
         |> Map.toList
-        |> List.sumBy (fun (k, v) -> 
+        |> List.sumBy (fun (k, v) ->
             match v with
             | Some playerId when playerId = player.PlayerId -> 2 
             | _ -> 0)
@@ -111,8 +103,5 @@ let calculateVictoryPoints (achievements : Map<AchievementCard, PlayerId option>
     infrastructurePoints + achievementPoints
 
 let updateVictoryPoints (achievements : Map<AchievementCard, PlayerId option>) (player : Player) =
-    {
-        player with
-            VictoryPoints =
-                calculateVictoryPoints achievements player
-    }
+    Optic.set Player.VictoryPoints_ (calculateVictoryPoints achievements player) player
+
