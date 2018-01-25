@@ -3,3 +3,5 @@ Suave
 Newtonsoft.Json
 Suave.Experimental
 Aether
+Fable.Elmish
+Fable.Elmish.React

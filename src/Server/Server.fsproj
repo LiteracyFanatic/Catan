@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\Shared\DomainTypes.fs" />
+    <Compile Include="..\Shared\Vertex.fs" />
+    <Compile Include="..\Shared\Path.fs" />
+    <Compile Include="..\Shared\Terrain.fs" />
+    <Compile Include="..\Shared\Harbor.fs" />  
+    <Compile Include="..\Shared\Player.fs" />
+    <Compile Include="..\Shared\DevelopmentCard.fs" />
+    <Compile Include="..\Shared\GameState.fs" />
+    <Compile Include="..\Shared\Tests.fs" />
+    <Compile Include="Server.fs" />
+    <Compile Include="Main.fs" />
+  </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>

@@ -1,9 +1,37 @@
-source https://www.nuget.org/api/v2
+//source https://www.nuget.org/api/v2
 
-framework: >= net461
-nuget Aether
-nuget FAKE
-nuget FSharp.Core
-nuget Suave
-nuget Suave.Experimental
-nuget Newtonsoft.Json
+//framework: >= net461
+//nuget Aether
+//nuget Fable.Elmish
+//nuget Fable.Elmish.React
+//nuget FAKE
+//nuget FSharp.Core
+//nuget Suave
+//nuget Suave.Experimental
+//nuget Newtonsoft.Json
+
+group Server
+  source https://api.nuget.org/v3/index.json
+
+  nuget FSharp.Core
+  nuget Suave
+  nuget Suave.Experimental
+  nuget Newtonsoft.Json
+  nuget Aether
+
+  clitool Microsoft.DotNet.Watcher.Tools
+
+group Client
+  source https://api.nuget.org/v3/index.json
+
+  nuget Fable.Core
+  nuget Fable.Elmish.Debugger
+  nuget Fable.Elmish.React
+  nuget Fable.Elmish.HMR
+
+  clitool dotnet-fable
+
+group Build
+  source https://api.nuget.org/v3/index.json
+
+  nuget FAKE
